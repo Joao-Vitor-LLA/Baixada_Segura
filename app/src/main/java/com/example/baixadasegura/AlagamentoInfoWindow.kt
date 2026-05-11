@@ -4,10 +4,12 @@ import android.widget.Button
 import android.widget.TextView
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polygon
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 
+
 class AlagamentoInfoWindow(
-    mapView: MapView
+    private val mapView: MapView
 ) : InfoWindow(R.layout.info_alagamento, mapView) {
 
     private var likes = 0
@@ -42,8 +44,16 @@ class AlagamentoInfoWindow(
         }
 
         btnConfirmar.setOnClickListener {
+
             marker.title = "Alagamento confirmado"
             titulo.text = marker.title
+
+            val circulo = marker.relatedObject as Polygon
+
+            circulo.fillColor = android.graphics.Color.argb(80, 255, 0, 0)
+            circulo.strokeColor = android.graphics.Color.RED
+
+            mapView.invalidate()
         }
     }
 

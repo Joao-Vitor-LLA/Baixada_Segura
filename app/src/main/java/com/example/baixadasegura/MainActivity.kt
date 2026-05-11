@@ -136,10 +136,11 @@ class MainActivity : AppCompatActivity() {
 
 
             val circulo = Polygon()
+            marker.relatedObject = circulo
             circulo.points = Polygon.pointsAsCircle(local, 50.0)
 
             circulo.fillColor = android.graphics.Color.argb(80, 255, 0, 0)
-            circulo.strokeColor = android.graphics.Color.RED
+            circulo.strokeColor = android.graphics.Color.YELLOW
             circulo.strokeWidth = 4f
 
             map.overlays.add(circulo)

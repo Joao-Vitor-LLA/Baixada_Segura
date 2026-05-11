@@ -1,5 +1,6 @@
 package com.example.baixadasegura
 
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import org.osmdroid.views.MapView
@@ -51,6 +52,10 @@ class AlagamentoInfoWindow(
 
             circulo.fillColor = android.graphics.Color.argb(80, 255, 0, 0)
             circulo.strokeColor = android.graphics.Color.RED
+
+            btnLike.visibility = View.GONE
+            btnDislike.visibility = View.GONE
+            btnConfirmar.visibility = View.GONE
 
             mapView.invalidate()
         }

@@ -11,7 +11,12 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import android.widget.Button
+import org.osmdroid.events.MapEventsReceiver
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polygon
+import org.osmdroid.views.overlay.infowindow.InfoWindow
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +39,23 @@ class MainActivity : AppCompatActivity() {
         map.setMultiTouchControls(true)
         map.setBuiltInZoomControls(false)
 
+        val mapEventsReceiver = object : MapEventsReceiver {
+
+            override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
+
+                InfoWindow.closeAllInfoWindowsOn(map)
+
+                return false
+            }
+
+            override fun longPressHelper(p: GeoPoint?): Boolean {
+                return false
+            }
+        }
+
+        val mapEventsOverlay = MapEventsOverlay(mapEventsReceiver)
+        map.overlays.add(mapEventsOverlay)
+
         //botão de centralizar
         val btnLocalizacao = findViewById<Button>(R.id.btnLocalizacao)
         btnLocalizacao.setOnClickListener {
@@ -45,6 +67,9 @@ class MainActivity : AppCompatActivity() {
 
         btnPin.setOnClickListener {
             adicionarPinNaLocalizacao()
+        }
+        map.setOnClickListener {
+            InfoWindow.closeAllInfoWindowsOn(map)
         }
     }
 
@@ -97,14 +122,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun adicionarPinNaLocalizacao() {
+
         if (::locationOverlay.isInitialized) {
-            val local = locationOverlay.myLocation
+
+            val local = locationOverlay.myLocation ?: return
+
             val marker = Marker(map)
             marker.position = local
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             marker.title = "Alagamento reportado\n(Não analisado)"
 
+            marker.infoWindow = AlagamentoInfoWindow(map)
+
+
+            val circulo = Polygon()
+            circulo.points = Polygon.pointsAsCircle(local, 50.0)
+
+            circulo.fillColor = android.graphics.Color.argb(80, 255, 0, 0)
+            circulo.strokeColor = android.graphics.Color.RED
+            circulo.strokeWidth = 4f
+
+            map.overlays.add(circulo)
+
             map.overlays.add(marker)
+
             map.invalidate()
         }
     }

@@ -7,7 +7,6 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 
-
 class AlagamentoInfoWindow(
     private val mapView: MapView
 ) : InfoWindow(R.layout.info_alagamento, mapView) {

@@ -18,7 +18,6 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var map: MapView

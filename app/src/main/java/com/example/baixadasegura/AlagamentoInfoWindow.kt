@@ -15,6 +15,8 @@ class AlagamentoInfoWindow(
     private var likes = 0
     private var dislikes = 0
 
+    private var isvoted = 0
+
     override fun onOpen(item: Any?) {
 
         val marker = item as Marker
@@ -34,13 +36,24 @@ class AlagamentoInfoWindow(
         atualizarTexto()
 
         btnLike.setOnClickListener {
-            likes++
-            atualizarTexto()
+            if (isvoted == 0) {
+                isvoted = 1
+                btnLike.visibility = View.GONE
+                btnDislike.visibility = View.GONE
+                likes++
+                atualizarTexto()
+            }
+
         }
 
         btnDislike.setOnClickListener {
-            dislikes++
-            atualizarTexto()
+            if (isvoted == 0) {
+                isvoted = 1
+                btnLike.visibility = View.GONE
+                btnDislike.visibility = View.GONE
+                dislikes++
+                atualizarTexto()
+            }
         }
 
         btnConfirmar.setOnClickListener {

@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun longPressHelper(p: GeoPoint?): Boolean {
-
                 val swtPinLocal = findViewById<Switch>(R.id.swtPinLocal)
                 if (p != null && swtPinLocal.isChecked) {
                     adicionarPin(p)
@@ -137,12 +136,9 @@ class MainActivity : AppCompatActivity() {
 
         marker.relatedObject = circulo
 
-        circulo.points = Polygon.pointsAsCircle(local, 50.0)
-
+        circulo.points = Polygon.pointsAsCircle(local, 80.0)
         circulo.fillColor = android.graphics.Color.argb(80, 255, 0, 0)
-
         circulo.strokeColor = android.graphics.Color.YELLOW
-
         circulo.strokeWidth = 4f
 
         map.overlays.add(circulo)

@@ -3,7 +3,6 @@ package com.example.baixadasegura
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.system.Os.close
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -29,8 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         //Configuração padrão do OSMDroid
         Configuration.getInstance().load(
-            applicationContext,
-            getSharedPreferences("osmdroid", MODE_PRIVATE)
+            applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE)
         )
 
         setContentView(R.layout.activity_main)
@@ -42,14 +40,15 @@ class MainActivity : AppCompatActivity() {
         val mapEventsReceiver = object : MapEventsReceiver {
 
             override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
-
                 InfoWindow.closeAllInfoWindowsOn(map)
-
                 return false
             }
 
             override fun longPressHelper(p: GeoPoint?): Boolean {
-                return false
+                if (p != null) {
+                    adicionarPin(p)
+                }
+                return true
             }
         }
 
@@ -66,8 +65,12 @@ class MainActivity : AppCompatActivity() {
         val btnPin = findViewById<Button>(R.id.btnPin)
 
         btnPin.setOnClickListener {
-            adicionarPinNaLocalizacao()
+
+            val local = locationOverlay.myLocation ?: return@setOnClickListener
+
+            adicionarPin(local)
         }
+
         map.setOnClickListener {
             InfoWindow.closeAllInfoWindowsOn(map)
         }
@@ -75,14 +78,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun verificarPermissaoLocalizacao() {
         if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                this, Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1
             )
         } else {
             ativarLocalizacao()
@@ -90,23 +90,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == 1 &&
-            grantResults.isNotEmpty() &&
-            grantResults[0] == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             ativarLocalizacao()
         }
     }
+
     private fun ativarLocalizacao() {
         locationOverlay = MyLocationNewOverlay(
-            GpsMyLocationProvider(this),
-            map
+            GpsMyLocationProvider(this), map
         )
 
         locationOverlay.enableMyLocation()
@@ -121,34 +116,35 @@ class MainActivity : AppCompatActivity() {
         map.controller.setZoom(18.0)
     }
 
-    private fun adicionarPinNaLocalizacao() {
+    private fun adicionarPin(local: GeoPoint) {
 
-        if (::locationOverlay.isInitialized) {
+        val marker = Marker(map)
+        marker.position = local
 
-            val local = locationOverlay.myLocation ?: return
+        marker.setAnchor(
+            Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM
+        )
 
-            val marker = Marker(map)
-            marker.position = local
-            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-            marker.title = "Alagamento reportado\n(Não analisado)"
+        marker.title = "Alagamento reportado\n(Não analisado)"
 
-            marker.infoWindow = AlagamentoInfoWindow(map)
+        marker.infoWindow = AlagamentoInfoWindow(map)
 
+        val circulo = Polygon()
 
-            val circulo = Polygon()
-            marker.relatedObject = circulo
-            circulo.points = Polygon.pointsAsCircle(local, 50.0)
+        marker.relatedObject = circulo
 
-            circulo.fillColor = android.graphics.Color.argb(80, 255, 0, 0)
-            circulo.strokeColor = android.graphics.Color.YELLOW
-            circulo.strokeWidth = 4f
+        circulo.points = Polygon.pointsAsCircle(local, 50.0)
 
-            map.overlays.add(circulo)
+        circulo.fillColor = android.graphics.Color.argb(80, 255, 0, 0)
 
-            map.overlays.add(marker)
+        circulo.strokeColor = android.graphics.Color.YELLOW
 
-            map.invalidate()
-        }
+        circulo.strokeWidth = 4f
+
+        map.overlays.add(circulo)
+        map.overlays.add(marker)
+
+        map.invalidate()
     }
 
     override fun onResume() {

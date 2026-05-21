@@ -26,6 +26,7 @@ class AlagamentoInfoWindow(
         val btnLike = mView.findViewById<Button>(R.id.btnLike)
         val btnDislike = mView.findViewById<Button>(R.id.btnDislike)
         val btnConfirmar = mView.findViewById<Button>(R.id.btnConfirmar)
+        val btnExcluir = mView.findViewById<Button>(R.id.btnExcluir)
 
         titulo.text = marker.title
 
@@ -72,6 +73,16 @@ class AlagamentoInfoWindow(
 
             mapView.invalidate()
         }
+
+        btnExcluir.setOnClickListener{
+            val circulo = marker.relatedObject as Polygon
+
+            marker.closeInfoWindow()
+            mapView.overlays.remove(marker)
+            mapView.overlays.remove(circulo)
+            mapView.invalidate()
+        }
+
     }
 
     override fun onClose() {}

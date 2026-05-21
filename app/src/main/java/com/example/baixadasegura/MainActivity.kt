@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun longPressHelper(p: GeoPoint?): Boolean {
-
                 val swtPinLocal = findViewById<Switch>(R.id.swtPinLocal)
                 if (p != null && swtPinLocal.isChecked) {
                     adicionarPin(p)

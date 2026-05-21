@@ -17,6 +17,7 @@ import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon
 import org.osmdroid.views.overlay.infowindow.InfoWindow
+import android.widget.Switch
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,9 +46,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun longPressHelper(p: GeoPoint?): Boolean {
-                if (p != null) {
+
+                val swtPinLocal = findViewById<Switch>(R.id.swtPinLocal)
+                if (p != null && swtPinLocal.isChecked) {
                     adicionarPin(p)
                 }
+
                 return true
             }
         }

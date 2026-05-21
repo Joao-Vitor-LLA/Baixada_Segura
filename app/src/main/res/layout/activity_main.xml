@@ -32,8 +32,8 @@
             android:layout_gravity="bottom|start"
             android:layout_margin="16dp"/>
 
-        <Button
-            android:id="@+id/btnPinLocal"
+        <Switch
+            android:id="@+id/swtPinLocal"
             android:layout_width="65dp"
             android:layout_height="60dp"
             android:text="📌"

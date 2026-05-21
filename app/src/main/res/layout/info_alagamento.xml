@@ -56,4 +56,18 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnExcluir"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:text="❌" />
+
+    </LinearLayout>
+
 </LinearLayout>

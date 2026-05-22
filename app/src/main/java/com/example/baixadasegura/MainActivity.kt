@@ -18,11 +18,16 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 import android.widget.Switch
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var map: MapView
     private lateinit var locationOverlay: MyLocationNewOverlay
+
+    private val db = FirebaseDatabase.getInstance()
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +82,9 @@ class MainActivity : AppCompatActivity() {
         map.setOnClickListener {
             InfoWindow.closeAllInfoWindowsOn(map)
         }
+
+        database = FirebaseDatabase.getInstance().reference
+        //carregarAlertas()
     }
 
     private fun verificarPermissaoLocalizacao() {
@@ -119,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         map.controller.setZoom(18.0)
     }
 
-    private fun adicionarPin(local: GeoPoint) {
+    private fun adicionarPin(local: GeoPoint,  salvarNoBanco: Boolean = true) {
 
         val marker = Marker(map)
         marker.position = local
@@ -137,7 +145,7 @@ class MainActivity : AppCompatActivity() {
         marker.relatedObject = circulo
 
         circulo.points = Polygon.pointsAsCircle(local, 80.0)
-        circulo.fillColor = android.graphics.Color.argb(80, 255, 0, 0)
+        circulo.fillColor = android.graphics.Color.argb(100, 255, 0, 0)
         circulo.strokeColor = android.graphics.Color.YELLOW
         circulo.strokeWidth = 4f
 
@@ -145,6 +153,64 @@ class MainActivity : AppCompatActivity() {
         map.overlays.add(marker)
 
         map.invalidate()
+
+        if (salvarNoBanco) {
+
+            val alerta = hashMapOf(
+                "latitude" to local.latitude,
+                "longitude" to local.longitude,
+                "titulo" to "Alagamento"
+            )
+
+            database.child("alertas")
+                .push()
+                .setValue(alerta)
+        }
+    }
+
+    private fun carregarAlertas() {
+
+        database.child("alertas")
+            .addValueEventListener(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    val remover = mutableListOf<Any>()
+
+                    for (overlay in map.overlays) {
+
+                        if (overlay is Marker || overlay is Polygon) {
+                            remover.add(overlay)
+                        }
+                    }
+
+                    map.overlays.removeAll(remover)
+
+                    for (item in snapshot.children) {
+
+                        val latitude =
+                            item.child("latitude")
+                                .getValue(Double::class.java)
+
+                        val longitude =
+                            item.child("longitude")
+                                .getValue(Double::class.java)
+
+                        if (latitude != null && longitude != null) {
+
+                            val ponto = GeoPoint(
+                                latitude,
+                                longitude
+                            )
+
+                            adicionarPin(ponto, false)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
     }
 
     override fun onResume() {

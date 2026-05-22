@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             override fun longPressHelper(p: GeoPoint?): Boolean {
                 val swtPinLocal = findViewById<Switch>(R.id.swtPinLocal)
                 if (p != null && swtPinLocal.isChecked) {
-                    adicionarPin(p)
+                    adicionarPin(p,true)
                 }
 
                 return true
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
             val local = locationOverlay.myLocation ?: return@setOnClickListener
 
-            adicionarPin(local)
+            adicionarPin(local,true)
         }
 
         map.setOnClickListener {
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         database = FirebaseDatabase.getInstance().reference
-        //carregarAlertas()
+        carregarAlertas()
     }
 
     private fun verificarPermissaoLocalizacao() {
@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         map.controller.setZoom(18.0)
     }
 
-    private fun adicionarPin(local: GeoPoint,  salvarNoBanco: Boolean = true) {
+    private fun adicionarPin(local: GeoPoint,  salvarNoBanco: Boolean) {
 
         val marker = Marker(map)
         marker.position = local

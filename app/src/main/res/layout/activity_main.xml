@@ -14,7 +14,7 @@
         <org.osmdroid.views.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/btnLocalizacao"
@@ -28,9 +28,9 @@
             android:id="@+id/btnPin"
             android:layout_width="65dp"
             android:layout_height="60dp"
-            android:text="📍"
             android:layout_gravity="bottom|start"
-            android:layout_margin="16dp"/>
+            android:layout_margin="16dp"
+            android:text="📍" />
 
         <Switch
             android:id="@+id/swtPinLocal"
@@ -39,7 +39,8 @@
             android:text="📌"
             android:layout_gravity="bottom|start"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="90dp"/>
+            android:layout_marginBottom="90dp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

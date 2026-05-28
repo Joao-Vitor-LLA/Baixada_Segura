@@ -82,8 +82,6 @@ class AlagamentoInfoWindow(
             mapView.overlays.remove(circulo)
             mapView.invalidate()
         }
-
     }
-
     override fun onClose() {}
 }

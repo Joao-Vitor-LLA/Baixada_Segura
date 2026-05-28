@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var map: MapView
     private lateinit var locationOverlay: MyLocationNewOverlay
 
-    private val db = FirebaseDatabase.getInstance()
     private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,9 +131,7 @@ class MainActivity : AppCompatActivity() {
         val marker = Marker(map)
         marker.position = local
 
-        marker.setAnchor(
-            Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM
-        )
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
 
         marker.title = "Alagamento reportado\n(Não analisado)"
 
@@ -163,8 +160,16 @@ class MainActivity : AppCompatActivity() {
             )
 
             database.child("alertas")
-                .push()
-                .setValue(alerta)
+                .get()
+                .addOnSuccessListener { snapshot ->
+
+                    val quantidade = snapshot.childrenCount + 1
+                    val id = "alagamento_$quantidade"
+
+                    database.child("alertas")
+                        .child(id)
+                        .setValue(alerta)
+                }
         }
     }
 
@@ -189,12 +194,10 @@ class MainActivity : AppCompatActivity() {
                     for (item in snapshot.children) {
 
                         val latitude =
-                            item.child("latitude")
-                                .getValue(Double::class.java)
+                            item.child("latitude").getValue(Double::class.java)
 
                         val longitude =
-                            item.child("longitude")
-                                .getValue(Double::class.java)
+                            item.child("longitude").getValue(Double::class.java)
 
                         if (latitude != null && longitude != null) {
 

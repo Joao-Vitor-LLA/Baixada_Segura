@@ -222,6 +222,11 @@ Qualquer alteração no Firebase é atualizada em todos os dispositivos conectad
 
 ---
 
-# Desenvolvedor
+# Desenvolvedores
 
-Projeto desenvolvido para estudo e prototipagem de um sistema colaborativo de monitoramento de enchentes urbanas.
+Arthur Almeida Lima arthurlima@unisantos.br
+Daniel Santiago Purificação danielpurificacao@unisantos.br
+João Pedro Lira de Carvalho jcarvalho@unisantos.br
+João Vitor Ludovino Leite Alves j.alves@unisantos.br
+Nicolas Caldeira dos Santos nicolassantos@unisantos.br
+Nicolas Jimenes Haase nicolashaase@unisantos.br

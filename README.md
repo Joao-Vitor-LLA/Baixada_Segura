@@ -225,8 +225,14 @@ Qualquer alteração no Firebase é atualizada em todos os dispositivos conectad
 # Desenvolvedores
 
 Arthur Almeida Lima arthurlima@unisantos.br
+
 Daniel Santiago Purificação danielpurificacao@unisantos.br
+
 João Pedro Lira de Carvalho jcarvalho@unisantos.br
+
 João Vitor Ludovino Leite Alves j.alves@unisantos.br
+
 Nicolas Caldeira dos Santos nicolassantos@unisantos.br
+
 Nicolas Jimenes Haase nicolashaase@unisantos.br
+

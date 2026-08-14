@@ -101,12 +101,6 @@ class MainActivity : AppCompatActivity() {
             centralizarNoUsuario()
         }
 
-        val btnLocaliza = findViewById<Button>(R.id.btnLocaliza)
-
-        btnLocaliza.setOnClickListener {
-            centralizaTeste()
-        }
-
         val btnPin = findViewById<Button>(R.id.btnPin)
 
         btnPin.setOnClickListener {
@@ -218,12 +212,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun centralizarNoUsuario() {
         val local = locationOverlay.myLocation
-        map.controller.animateTo(local)
-        map.controller.setZoom(18.0)
-    }
-
-    private fun centralizaTeste() {
-        val local = GeoPoint(-23.83743614679075, -46.14066302776337)
         map.controller.animateTo(local)
         map.controller.setZoom(18.0)
     }

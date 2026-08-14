@@ -50,14 +50,6 @@
             android:text="📌"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-        <Button
-            android:id="@+id/btnLocaliza"
-            android:layout_width="65dp"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom|start"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="150dp"
-            android:text="🚫" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

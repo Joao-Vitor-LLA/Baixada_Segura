@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
@@ -45,14 +46,25 @@ class MainActivity : AppCompatActivity() {
             getSharedPreferences("osmdroid", MODE_PRIVATE)
         )
 
-        osmdroidConfig.userAgentValue =
+        osmdroidConfig.setUserAgentValue(
             "BaixadaSegura/1.0 (contato: j.alves@unisantos.br)"
+        )
 
+        osmdroidConfig.getAdditionalHttpRequestProperties()
+            .put(
+                "User-Agent",
+                "BaixadaSegura/1.0 (contato: j.alves@unisantos.br)"
+            )
+
+        Log.d(
+            "OSM",
+            "UA configurado: ${osmdroidConfig.userAgentValue}"
+        )
         setContentView(R.layout.activity_main)
 
         map = findViewById(R.id.map)
-        map.setTileSource(TileSourceFactory.MAPNIK)
 
+        map.setTileSource(TileSourceFactory.MAPNIK)
         map.setMultiTouchControls(true)
         map.setBuiltInZoomControls(false)
 

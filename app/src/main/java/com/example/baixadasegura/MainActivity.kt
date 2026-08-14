@@ -1,6 +1,7 @@
 package com.example.baixadasegura
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -17,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
@@ -36,13 +38,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Configuration.getInstance().load(
-            applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE)
+        val osmdroidConfig = Configuration.getInstance()
+
+        osmdroidConfig.load(
+            applicationContext,
+            getSharedPreferences("osmdroid", MODE_PRIVATE)
         )
+
+        osmdroidConfig.userAgentValue =
+            "BaixadaSegura/1.0 (contato: j.alves@unisantos.br)"
 
         setContentView(R.layout.activity_main)
 
         map = findViewById(R.id.map)
+        map.setTileSource(TileSourceFactory.MAPNIK)
 
         map.setMultiTouchControls(true)
         map.setBuiltInZoomControls(false)
@@ -59,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
 
+            @SuppressLint("UseSwitchCompatOrMaterialCode")
             override fun longPressHelper(
                 p: GeoPoint?
             ): Boolean {

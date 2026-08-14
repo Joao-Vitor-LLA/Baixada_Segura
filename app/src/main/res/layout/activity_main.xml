@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -20,18 +19,18 @@
             android:id="@+id/btnLocalizacao"
             android:layout_width="65dp"
             android:layout_height="60dp"
-            android:text="🧍‍♂️"
             android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"/>
+            android:layout_margin="16dp"
+            android:text="🧍‍♂️" />
 
         <Button
             android:id="@+id/btnCord"
             android:layout_width="65dp"
             android:layout_height="60dp"
-            android:text="🗺️"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="90dp"/>
+            android:layout_marginBottom="90dp"
+            android:text="🗺️" />
 
         <Button
             android:id="@+id/btnPin"
@@ -45,11 +44,20 @@
             android:id="@+id/swtPinLocal"
             android:layout_width="65dp"
             android:layout_height="60dp"
-            android:text="📌"
             android:layout_gravity="bottom|start"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="90dp"
+            android:text="📌"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <Button
+            android:id="@+id/btnLocaliza"
+            android:layout_width="65dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="150dp"
+            android:text="🚫" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

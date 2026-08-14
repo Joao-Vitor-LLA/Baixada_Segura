@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
@@ -31,8 +30,7 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import java.util.Locale
 
 data class AlertaMarkerData(
-    val idFirebase: String?,
-    val circulo: Polygon
+    val idFirebase: String?, val circulo: Polygon
 )
 
 class MainActivity : AppCompatActivity() {
@@ -47,24 +45,17 @@ class MainActivity : AppCompatActivity() {
         val osmdroidConfig = Configuration.getInstance()
 
         osmdroidConfig.load(
-            applicationContext,
-            getSharedPreferences("osmdroid", MODE_PRIVATE)
+            applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE)
         )
 
         osmdroidConfig.setUserAgentValue(
             "BaixadaSegura/1.0 (contato: j.alves@unisantos.br)"
         )
 
-        osmdroidConfig.getAdditionalHttpRequestProperties()
-            .put(
-                "User-Agent",
-                "BaixadaSegura/1.0 (contato: j.alves@unisantos.br)"
-            )
-
-        Log.d(
-            "OSM",
-            "UA configurado: ${osmdroidConfig.userAgentValue}"
+        osmdroidConfig.getAdditionalHttpRequestProperties().put(
+            "User-Agent", "BaixadaSegura/1.0 (contato: j.alves@unisantos.br)"
         )
+
         setContentView(R.layout.activity_main)
 
         map = findViewById(R.id.map)
@@ -108,6 +99,12 @@ class MainActivity : AppCompatActivity() {
 
         btnLocalizacao.setOnClickListener {
             centralizarNoUsuario()
+        }
+
+        val btnLocaliza = findViewById<Button>(R.id.btnLocaliza)
+
+        btnLocaliza.setOnClickListener {
+            centralizaTeste()
         }
 
         val btnPin = findViewById<Button>(R.id.btnPin)
@@ -220,9 +217,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun centralizarNoUsuario() {
-
         val local = locationOverlay.myLocation
+        map.controller.animateTo(local)
+        map.controller.setZoom(18.0)
+    }
 
+    private fun centralizaTeste() {
+        val local = GeoPoint(-23.83743614679075, -46.14066302776337)
         map.controller.animateTo(local)
         map.controller.setZoom(18.0)
     }
@@ -259,9 +260,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun adicionarPin(
-        local: GeoPoint,
-        salvarNoBanco: Boolean,
-        idFirebase: String? = null
+        local: GeoPoint, salvarNoBanco: Boolean, idFirebase: String? = null
     ) {
 
         val marker = Marker(map)
@@ -269,40 +268,30 @@ class MainActivity : AppCompatActivity() {
         marker.position = local
 
         marker.setAnchor(
-            Marker.ANCHOR_CENTER,
-            Marker.ANCHOR_BOTTOM
+            Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM
         )
 
         val endereco = pegarEndereco(local)
 
-        marker.title =
-            "Alagamento reportado\n$endereco"
+        marker.title = "Alagamento reportado\n$endereco"
 
-        marker.infoWindow =
-            AlagamentoInfoWindow(map)
+        marker.infoWindow = AlagamentoInfoWindow(map)
 
         val circulo = Polygon()
 
-        circulo.points =
-            Polygon.pointsAsCircle(local, 80.0)
+        circulo.points = Polygon.pointsAsCircle(local, 80.0)
 
-        circulo.fillColor =
-            android.graphics.Color.argb(
-                100,
-                255,
-                0,
-                0
-            )
+        circulo.fillColor = android.graphics.Color.argb(
+            100, 255, 0, 0
+        )
 
-        circulo.strokeColor =
-            android.graphics.Color.YELLOW
+        circulo.strokeColor = android.graphics.Color.YELLOW
 
         circulo.strokeWidth = 4f
 
         // Guarda o ID do Firebase + o círculo
         marker.relatedObject = AlertaMarkerData(
-            idFirebase,
-            circulo
+            idFirebase, circulo
         )
 
         map.overlays.add(circulo)
@@ -319,99 +308,71 @@ class MainActivity : AppCompatActivity() {
                 "endereco" to endereco
             )
 
-            database.child("alertas")
-                .get()
-                .addOnSuccessListener { snapshot ->
+            database.child("alertas").get().addOnSuccessListener { snapshot ->
 
-                    val quantidade =
-                        snapshot.childrenCount + 1
+                val quantidade = snapshot.childrenCount + 1
 
-                    val id =
-                        "alagamento_$quantidade"
+                val id = "alagamento_$quantidade"
 
-                    // Atualiza o ID do Firebase no Marker
-                    marker.relatedObject =
-                        AlertaMarkerData(
-                            id,
-                            circulo
-                        )
+                // Atualiza o ID do Firebase no Marker
+                marker.relatedObject = AlertaMarkerData(
+                    id, circulo
+                )
 
-                    database
-                        .child("alertas")
-                        .child(id)
-                        .setValue(alerta)
-                }
+                database.child("alertas").child(id).setValue(alerta)
+            }
         }
     }
 
     private fun carregarAlertas() {
 
-        database.child("alertas")
-            .addValueEventListener(
-                object : ValueEventListener {
+        database.child("alertas").addValueEventListener(object : ValueEventListener {
 
-                    override fun onDataChange(
-                        snapshot: DataSnapshot
-                    ) {
+            override fun onDataChange(
+                snapshot: DataSnapshot
+            ) {
 
-                        val remover =
-                            mutableListOf<Any>()
+                val remover = mutableListOf<Any>()
 
-                        for (overlay in map.overlays) {
+                for (overlay in map.overlays) {
 
-                            if (
-                                overlay is Marker ||
-                                overlay is Polygon
-                            ) {
+                    if (overlay is Marker || overlay is Polygon) {
 
-                                remover.add(overlay)
-                            }
-                        }
-
-                        map.overlays.removeAll(remover)
-
-                        for (item in snapshot.children) {
-
-                            val latitude =
-                                item.child("latitude")
-                                    .getValue(Double::class.java)
-
-                            val longitude =
-                                item.child("longitude")
-                                    .getValue(Double::class.java)
-
-                            // ID do alerta no Firebase
-                            val idFirebase =
-                                item.key
-
-                            if (
-                                latitude != null &&
-                                longitude != null
-                            ) {
-
-                                val ponto =
-                                    GeoPoint(
-                                        latitude,
-                                        longitude
-                                    )
-
-                                adicionarPin(
-                                    ponto,
-                                    false,
-                                    idFirebase
-                                )
-                            }
-                        }
-
-                        map.invalidate()
-                    }
-
-                    override fun onCancelled(
-                        error: DatabaseError
-                    ) {
+                        remover.add(overlay)
                     }
                 }
-            )
+
+                map.overlays.removeAll(remover)
+
+                for (item in snapshot.children) {
+
+                    val latitude = item.child("latitude").getValue(Double::class.java)
+
+                    val longitude = item.child("longitude").getValue(Double::class.java)
+
+                    // ID do alerta no Firebase
+                    val idFirebase = item.key
+
+                    if (latitude != null && longitude != null) {
+
+                        val ponto = GeoPoint(
+                            latitude, longitude
+                        )
+
+                        adicionarPin(
+                            ponto, false, idFirebase
+                        )
+                    }
+                }
+
+                map.invalidate()
+            }
+
+            override fun onCancelled(
+                error: DatabaseError
+            ) {
+            }
+        })
     }
 
     override fun onResume() {

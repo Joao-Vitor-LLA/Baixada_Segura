@@ -8,12 +8,10 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.infowindow.InfoWindow
 
-class AlagamentoInfoWindow(
-    private val mapView: MapView
-) : InfoWindow(R.layout.info_alagamento, mapView) {
+class AlagamentoInfoWindow(private val mapView: MapView) :
+    InfoWindow(R.layout.info_alagamento, mapView) {
 
-    private val database =
-        FirebaseDatabase.getInstance().reference
+    private val database = FirebaseDatabase.getInstance().reference
 
     private var likes = 0
     private var dislikes = 0
@@ -24,23 +22,17 @@ class AlagamentoInfoWindow(
 
         val marker = item as Marker
 
-        val titulo =
-            mView.findViewById<TextView>(R.id.txtTitulo)
+        val titulo = mView.findViewById<TextView>(R.id.txtTitulo)
 
-        val votos =
-            mView.findViewById<TextView>(R.id.txtVotos)
+        val votos = mView.findViewById<TextView>(R.id.txtVotos)
 
-        val btnLike =
-            mView.findViewById<Button>(R.id.btnLike)
+        val btnLike = mView.findViewById<Button>(R.id.btnLike)
 
-        val btnDislike =
-            mView.findViewById<Button>(R.id.btnDislike)
+        val btnDislike = mView.findViewById<Button>(R.id.btnDislike)
 
-        val btnConfirmar =
-            mView.findViewById<Button>(R.id.btnConfirmar)
+        val btnConfirmar = mView.findViewById<Button>(R.id.btnConfirmar)
 
-        val btnExcluir =
-            mView.findViewById<Button>(R.id.btnExcluir)
+        val btnExcluir = mView.findViewById<Button>(R.id.btnExcluir)
 
         titulo.text = marker.title
 
@@ -85,38 +77,25 @@ class AlagamentoInfoWindow(
         // CONFIRMAR
         btnConfirmar.setOnClickListener {
 
-            marker.title =
-                "Alagamento confirmado"
+            marker.title = "Alagamento confirmado"
 
-            titulo.text =
-                marker.title
+            titulo.text = marker.title
 
-            val dados =
-                marker.relatedObject as? AlertaMarkerData
-                    ?: return@setOnClickListener
+            val dados = marker.relatedObject as? AlertaMarkerData ?: return@setOnClickListener
 
-            val circulo =
-                dados.circulo
+            val circulo = dados.circulo
 
-            circulo.fillColor =
-                android.graphics.Color.argb(
-                    80,
-                    255,
-                    0,
-                    0
-                )
+            circulo.fillColor = android.graphics.Color.argb(
+                80, 255, 0, 0
+            )
 
-            circulo.strokeColor =
-                android.graphics.Color.RED
+            circulo.strokeColor = android.graphics.Color.RED
 
-            btnLike.visibility =
-                View.GONE
+            btnLike.visibility = View.GONE
 
-            btnDislike.visibility =
-                View.GONE
+            btnDislike.visibility = View.GONE
 
-            btnConfirmar.visibility =
-                View.GONE
+            btnConfirmar.visibility = View.GONE
 
             mapView.invalidate()
         }
@@ -124,33 +103,22 @@ class AlagamentoInfoWindow(
         // EXCLUIR
         btnExcluir.setOnClickListener {
 
-            val dados =
-                marker.relatedObject as? AlertaMarkerData
-                    ?: return@setOnClickListener
+            val dados = marker.relatedObject as? AlertaMarkerData ?: return@setOnClickListener
 
-            val idFirebase =
-                dados.idFirebase
+            val idFirebase = dados.idFirebase
 
             if (idFirebase != null) {
 
-                database
-                    .child("alertas")
-                    .child(idFirebase)
-                    .removeValue()
-                    .addOnSuccessListener {
+                database.child("alertas").child(idFirebase).removeValue().addOnSuccessListener {
 
-                        marker.closeInfoWindow()
+                    marker.closeInfoWindow()
 
-                        mapView.overlays.remove(
-                            marker
-                        )
+                    mapView.overlays.remove(marker)
 
-                        mapView.overlays.remove(
-                            dados.circulo
-                        )
+                    mapView.overlays.remove(dados.circulo)
 
-                        mapView.invalidate()
-                    }
+                    mapView.invalidate()
+                }
             }
         }
     }

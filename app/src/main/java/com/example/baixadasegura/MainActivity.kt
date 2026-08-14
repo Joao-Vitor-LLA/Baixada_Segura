@@ -1,3 +1,5 @@
+//.\gradlew.bat assembleDebug
+
 package com.example.baixadasegura
 
 import android.Manifest

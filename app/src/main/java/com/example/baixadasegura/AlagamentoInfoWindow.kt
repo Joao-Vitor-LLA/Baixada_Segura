@@ -46,7 +46,7 @@ class AlagamentoInfoWindow(private val mapView: MapView) :
         btnLike.setOnClickListener {
 
             if (isvoted == 0) {
-
+                
                 isvoted = 1
 
                 btnLike.visibility = View.GONE

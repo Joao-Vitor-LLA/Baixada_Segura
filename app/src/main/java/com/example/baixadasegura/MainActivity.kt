@@ -199,7 +199,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun ativarLocalizacao() {
-
         locationOverlay = MyLocationNewOverlay(
             GpsMyLocationProvider(this), map
         )

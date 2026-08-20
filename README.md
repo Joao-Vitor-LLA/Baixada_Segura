@@ -111,6 +111,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
 
     implementation("com.google.firebase:firebase-database")
+
+    implementation("com.google.firebase:firebase-auth-ktx")
 }
 ```
 
@@ -216,7 +218,6 @@ Qualquer alteração no Firebase é atualizada em todos os dispositivos conectad
 
 # Melhorias Futuras
 
-* Sistema de login
 * Upload de fotos
 * Sistema de votação persistente
 * Rotas alternativas

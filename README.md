@@ -37,11 +37,15 @@ app/
  │    ├── MainActivity.kt
  │    ├── CoordenadaActivity.kt
  │    ├── AlagamentoInfoWindow.kt
+ |    ├── LoginActivity.kt
+ |    ├── CadastroActivity.kt
  │
  ├── res/layout/
  │    ├── activity_main.xml
  │    ├── activity_coordenada.xml
  │    ├── info_alagamento.xml
+ │    ├── info_login.xml
+ │    ├── info_cadastro.xml
  │
  ├── AndroidManifest.xml
 ```

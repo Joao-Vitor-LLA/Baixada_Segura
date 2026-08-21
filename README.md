@@ -229,9 +229,9 @@ Qualquer alteração no Firebase é atualizada em todos os dispositivos conectad
 
 # Desenvolvedores
 
-Arthur Almeida Lima arthurlima@unisantos.br
-
 Daniel Santiago Purificação danielpurificacao@unisantos.br
+
+Felipe de Lima Monteiro felipemonteiro@unisantos.br
 
 João Pedro Lira de Carvalho jcarvalho@unisantos.br
 

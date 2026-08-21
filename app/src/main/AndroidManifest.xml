@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +23,11 @@
         <!-- Tela principal -->
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- Tela Coordenada -->
+        <activity
+            android:name=".CoordenadaActivity"
             android:exported="false" />
 
         <!-- Tela de login -->

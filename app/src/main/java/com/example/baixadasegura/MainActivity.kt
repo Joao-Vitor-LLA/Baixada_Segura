@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -103,14 +104,13 @@ class MainActivity : AppCompatActivity() {
             centralizarNoUsuario()
         }
 
-        val btnPin = findViewById<Button>(R.id.btnPin)
+        val btnPin = findViewById<ImageButton>(R.id.btnPin)
 
         btnPin.setOnClickListener {
-
             val local = locationOverlay.myLocation ?: return@setOnClickListener
-
             adicionarPin(local, true)
         }
+
 
         val btnCord = findViewById<Button>(R.id.btnCord)
 

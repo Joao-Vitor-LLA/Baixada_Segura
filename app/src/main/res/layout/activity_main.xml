@@ -32,13 +32,17 @@
             android:layout_marginBottom="90dp"
             android:text="🗺️" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnPin"
-            android:layout_width="65dp"
+            android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|start"
             android:layout_margin="16dp"
-            android:text="📍" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Adicionar alerta"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icone_alert_round" />
 
         <Switch
             android:id="@+id/swtPinLocal"

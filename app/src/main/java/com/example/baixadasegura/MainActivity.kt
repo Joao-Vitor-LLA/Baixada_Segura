@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
         map.overlays.add(mapEventsOverlay)
 
-        val btnLocalizacao = findViewById<Button>(R.id.btnLocalizacao)
+        val btnLocalizacao = findViewById<ImageButton>(R.id.btnlocalizacao)
 
         btnLocalizacao.setOnClickListener {
             centralizarNoUsuario()

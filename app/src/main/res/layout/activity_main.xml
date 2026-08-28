@@ -15,13 +15,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/btnLocalizacao"
-            android:layout_width="65dp"
+        <ImageButton
+            android:id="@+id/btnlocalizacao"
+            android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:text="🧍‍♂️" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Centralizar"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icone_centro" />
 
         <Button
             android:id="@+id/btnCord"
@@ -40,7 +43,6 @@
             android:layout_margin="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Adicionar alerta"
-            android:padding="8dp"
             android:scaleType="centerInside"
             android:src="@mipmap/icone_alert_round" />
 

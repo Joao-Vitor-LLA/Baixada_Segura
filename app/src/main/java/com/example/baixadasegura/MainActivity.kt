@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
@@ -112,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val btnCord = findViewById<Button>(R.id.btnCord)
+        val btnCord = findViewById<ImageButton>(R.id.btnCord)
 
         btnCord.setOnClickListener {
 

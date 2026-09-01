@@ -26,14 +26,17 @@
             android:scaleType="centerInside"
             android:src="@mipmap/icone_centro" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnCord"
             android:layout_width="65dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="90dp"
-            android:text="🗺️" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Adicionar por coordenada"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icone_cord" />
 
         <ImageButton
             android:id="@+id/btnPin"

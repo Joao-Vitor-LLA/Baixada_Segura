@@ -21,8 +21,9 @@
             android:layout_height="60dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@null"
             android:contentDescription="Centralizar"
+            android:foreground="@null"
             android:scaleType="centerInside"
             android:src="@mipmap/icone_centro" />
 
@@ -33,8 +34,9 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="90dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@null"
             android:contentDescription="Adicionar por coordenada"
+            android:foreground="@null"
             android:scaleType="centerInside"
             android:src="@mipmap/icone_cord" />
 
@@ -44,20 +46,36 @@
             android:layout_height="60dp"
             android:layout_gravity="bottom|start"
             android:layout_margin="16dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@null"
             android:contentDescription="Adicionar alerta"
+            android:foreground="@null"
             android:scaleType="centerInside"
             android:src="@mipmap/icone_alert_round" />
 
-        <Switch
-            android:id="@+id/swtPinLocal"
-            android:layout_width="65dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="bottom|start"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="90dp"
-            android:text="📌"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:contentDescription="Adicionar alerta em qualquer lugar"
+                android:scaleType="centerInside"
+                android:src="@mipmap/icone_pin" />
+
+            <Switch
+                android:id="@+id/swtPinLocal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        </LinearLayout>
 
     </FrameLayout>
 

@@ -17,12 +17,12 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
-        if (FirebaseAuth.getInstance().currentUser != null) {
+        auth = FirebaseAuth.getInstance()
+
+        if (auth.currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-
-        auth = FirebaseAuth.getInstance()
 
         val edtEmail =
             findViewById<EditText>(R.id.edtEmail)

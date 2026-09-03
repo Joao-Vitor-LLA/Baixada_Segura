@@ -98,13 +98,23 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnRecuperar.setOnClickListener {
-            val email =
-                edtEmail.text.toString().trim()
+            val email = edtEmail.text.toString().trim()
             if (email.isEmpty()) {
                 Toast.makeText(this, "Preencha o campo de E-mail", Toast.LENGTH_SHORT).show()
             } else {
-                auth.sendPasswordResetEmail(email)
-                Toast.makeText(this, "Olhe a caixa de spam", Toast.LENGTH_SHORT).show()
+                auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Olhe a caixa de spam", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Erro: Verifique se o E-mail esta certo e que tem uma conta registrada nele",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+                }
+
             }
 
         }

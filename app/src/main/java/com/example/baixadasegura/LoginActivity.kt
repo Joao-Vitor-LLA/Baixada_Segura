@@ -36,6 +36,9 @@ class LoginActivity : AppCompatActivity() {
         val btnCadastrar =
             findViewById<Button>(R.id.btnCadastrar)
 
+        val btnRecuperar =
+            findViewById<Button>(R.id.btnRecuperar)
+
         btnEntrar.setOnClickListener {
 
             val email =
@@ -92,6 +95,18 @@ class LoginActivity : AppCompatActivity() {
                 )
 
             startActivity(intent)
+        }
+
+        btnRecuperar.setOnClickListener {
+            val email =
+                edtEmail.text.toString().trim()
+            if (email.isEmpty()) {
+                Toast.makeText(this, "Preencha o campo de E-mail", Toast.LENGTH_SHORT).show()
+            } else {
+                auth.sendPasswordResetEmail(email)
+                Toast.makeText(this, "Olhe a caixa de spam", Toast.LENGTH_SHORT).show()
+            }
+
         }
     }
 }

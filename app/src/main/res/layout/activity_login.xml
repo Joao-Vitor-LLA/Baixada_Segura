@@ -33,4 +33,10 @@
         android:layout_height="wrap_content"
         android:text="Criar conta" />
 
+    <Button
+        android:id="@+id/btnRecuperar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Redefinir senha" />
+
 </LinearLayout>

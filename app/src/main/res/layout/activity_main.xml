@@ -16,6 +16,18 @@
             android:layout_height="match_parent" />
 
         <ImageButton
+            android:id="@+id/btnsair"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="right|end"
+            android:layout_margin="16dp"
+            android:background="@null"
+            android:contentDescription="Centralizar"
+            android:foreground="@null"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icone_sair" />
+
+        <ImageButton
             android:id="@+id/btnlocalizacao"
             android:layout_width="60dp"
             android:layout_height="60dp"

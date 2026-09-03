@@ -17,6 +17,11 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+
         auth = FirebaseAuth.getInstance()
 
         val edtEmail =

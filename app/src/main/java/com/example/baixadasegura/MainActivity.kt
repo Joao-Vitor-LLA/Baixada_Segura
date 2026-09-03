@@ -13,6 +13,7 @@ import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -97,6 +98,12 @@ class MainActivity : AppCompatActivity() {
 
         map.overlays.add(mapEventsOverlay)
 
+        val btnSair = findViewById<ImageButton>(R.id.btnsair)
+
+        btnSair.setOnClickListener {
+            deslogar()
+        }
+
         val btnLocalizacao = findViewById<ImageButton>(R.id.btnlocalizacao)
 
         btnLocalizacao.setOnClickListener {
@@ -129,6 +136,12 @@ class MainActivity : AppCompatActivity() {
         verificarPermissaoLocalizacao()
 
         carregarAlertas()
+    }
+
+    private fun deslogar() {
+        FirebaseAuth.getInstance().signOut()
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
     private fun verificarPermissaoLocalizacao() {

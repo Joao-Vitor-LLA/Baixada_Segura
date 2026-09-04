@@ -336,10 +336,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             database.child("alertas").get().addOnSuccessListener { snapshot ->
-
-                val quantidade = snapshot.childrenCount + 1
-
-                val id = "alagamento_$quantidade"
+                val id = database.child("alertas").push().key ?: return@addOnSuccessListener
 
                 // Atualiza o ID do Firebase no Marker
                 marker.relatedObject = AlertaMarkerData(

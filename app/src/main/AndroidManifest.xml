@@ -33,6 +33,11 @@
         <!-- Tela de login -->
         <activity
             android:name=".LoginActivity"
+            android:exported="false" />
+
+        <!-- Tela só Mapa -->
+        <activity
+            android:name=".MapaActivity"
             android:exported="true">
 
             <intent-filter>

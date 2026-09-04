@@ -23,7 +23,14 @@
         <!-- Tela principal -->
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
 
         <!-- Tela Coordenada -->
         <activity
@@ -35,17 +42,6 @@
             android:name=".LoginActivity"
             android:exported="false" />
 
-        <!-- Tela só Mapa -->
-        <activity
-            android:name=".MapaActivity"
-            android:exported="true">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
 
     </application>
 

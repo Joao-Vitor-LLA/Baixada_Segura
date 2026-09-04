@@ -8,7 +8,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -104,6 +106,12 @@ class MainActivity : AppCompatActivity() {
             deslogar()
         }
 
+        val btnEntar = findViewById<ImageButton>(R.id.btnentrar)
+
+        btnEntar.setOnClickListener {
+            logar()
+        }
+
         val btnLocalizacao = findViewById<ImageButton>(R.id.btnlocalizacao)
 
         btnLocalizacao.setOnClickListener {
@@ -136,12 +144,30 @@ class MainActivity : AppCompatActivity() {
         verificarPermissaoLocalizacao()
 
         carregarAlertas()
+        checaLogin()
+    }
+
+    private fun checaLogin() {
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            findViewById<ImageButton>(R.id.btnsair).visibility = View.GONE
+            findViewById<ImageButton>(R.id.btnPin).visibility = View.GONE
+            findViewById<ImageButton>(R.id.btnCord).visibility = View.GONE
+            findViewById<LinearLayout>(R.id.linear).visibility = View.GONE
+            findViewById<ImageButton>(R.id.btnentrar).visibility = View.VISIBLE
+        } else {
+            findViewById<ImageButton>(R.id.btnentrar).visibility = View.GONE
+        }
     }
 
     private fun deslogar() {
         FirebaseAuth.getInstance().signOut()
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    private fun logar() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        //finish()
     }
 
     private fun verificarPermissaoLocalizacao() {

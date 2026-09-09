@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
+    android:background="#F8F8FF"
     android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:background="#FFFFFF"
+        android:background="#F8F8FF"
         android:elevation="8dp"
         android:orientation="vertical"
         android:padding="20dp"
@@ -33,7 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:hint="Latitude"
-            android:inputType="numberDecimal|numberSigned" />
+            android:inputType="numberDecimal|numberSigned"
+            android:textColor="#1C1C1C"
+            android:textColorHint="#1C1C1C" />
 
         <EditText
             android:id="@+id/edtLongitude"
@@ -41,7 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:hint="Longitude"
-            android:inputType="numberDecimal|numberSigned" />
+            android:inputType="numberDecimal|numberSigned"
+            android:textColor="#1C1C1C"
+            android:textColorHint="#1C1C1C" />
 
         <Button
             android:id="@+id/btnAdicionarCord"
